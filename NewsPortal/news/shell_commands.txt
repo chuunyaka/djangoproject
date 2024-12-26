@@ -1,0 +1,54 @@
+from django.contrib.auth.models import User
+from news.models import Author, Category, Post, Comment
+
+user1 = User.objects.create_user('user1', password='password1')
+user2 = User.objects.create_user('user2', password='password2')
+
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user2)
+
+cat1 = Category.objects.create(name='Sport')
+cat2 = Category.objects.create(name='Politics')
+cat3 = Category.objects.create(name='Education')
+cat4 = Category.objects.create(name='Technology')
+
+post1 = Post.objects.create(author=author1,post_type='article', title ='Football', text = 'Do you like sport?')
+post2 = Post.objects.create(author=author2,post_type='article', title='Educational problem', text="Let's talk about education.")
+news1 = Post.objects.create(author=author1,post_type='news', title='Politics', text="Text 3.")
+
+post1.category.add(cat1, cat3)
+post2.category.add(cat3, cat2)
+news1.category.add(cat2, cat4)
+
+comment1 = Comment.objects.create(post=post1, user=user1, text='wow!')
+comment2 = Comment.objects.create(post=post1, user=user2, text='beautiful!')
+comment3 = Comment.objects.create(post=post2, user=user1, text='I agree with your opinion')
+comment4 = Comment.objects.create(post=news1, user=user2, text='Breaking news indeed.')
+
+post1.like()
+post1.like()
+post2.dislike()
+
+comment1.like()
+comment2.dislike()
+comment3.like()
+comment4.like()
+comment4.like()
+comment2.like()
+comment2.like()
+comment1.like()
+comment1.like()
+
+
+author1.update_rating()
+author2.update_rating()
+
+best_author = Author.objects.order_by('-rating').first()
+print(f'Best author: {best_author.user.username}, Rating: {best_author.rating}')
+
+best_post = Post.objects.order_by('-rating').first()
+print(f'Date: {best_post.created_at}, Author: {best_post.author.user.username}, Rating: {best_post.rating}, Title: {best_post.title}, Preview: {best_post.preview()}')
+
+comments = Comment.objects.filter(post=best_post)
+for comment in comments:
+    print(f'Date: {comment.created_at}, User: {comment.user.username}, Rating: {comment.rating}, Text: {comment.text}')
