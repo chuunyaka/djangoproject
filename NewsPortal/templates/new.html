@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% block title %}
+{{ new.title }}
+{% endblock title %}
+
+{% block content %}
+<h1>{{ new.title }}</h1>
+<p><strong>Author:</strong> {{ new.author }}</p>
+<p><strong>Post type:</strong> {{ new.post_type }}</p>
+<p><strong>Category:</strong> {% for category in new.category.all %}
+                       {{ category.name }}{% if not forloop.last %}, {% endif %}
+                   {% endfor %}</p>
+<p><strong>Text:</strong> {{ new.text|censor }}</p>
+<p><strong>Rating:</strong> {{ new.rating }}</p>
+<p><strong>Created at:</strong> {{ new.created_at|date:"d.m.Y" }}</p>
+{% endblock content %}
+
