@@ -6,7 +6,7 @@
 
 {% block content %}
 <h1>{{ new.title }}</h1>
-<p><strong>Author:</strong> {{ new.author }}</p>
+<p><strong>Author:</strong> {{ object.author }}</p>
 <p><strong>Post type:</strong> {{ new.post_type }}</p>
 <p><strong>Category:</strong> {% for category in new.category.all %}
                        {{ category.name }}{% if not forloop.last %}, {% endif %}

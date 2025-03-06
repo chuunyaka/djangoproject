@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
+from django.urls import reverse
 from django.utils.timezone import now
 
 class Author(models.Model):
@@ -24,12 +26,13 @@ class Category(models.Model):
         return self.name
 
 class Post(models.Model):
+    # objects = None
     ARTICLE = 'AR'
     NEWS = 'NW'
-    TYPES = [
+    TYPES = (
         (ARTICLE, 'Статья'),
         (NEWS, 'Новость')
-    ]
+    )
 
     author = models.ForeignKey(Author, on_delete = models.CASCADE)
     post_type = models.CharField(max_length=2, choices= TYPES, default=ARTICLE)
@@ -38,6 +41,9 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
     rating = models.IntegerField(default=0)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)  # Передаем аргументы корректно
 
     def like(self):
         self.rating += 1
@@ -49,6 +55,12 @@ class Post(models.Model):
 
     def preview(self):
         return f"{self.text[:124]}..."
+
+    def __str__(self):
+        return f'{self.title}: {self.text[:10]}'  # Используем title вместо name
+
+    def get_absolute_url(self):
+        return reverse('new_detail', args=[str(self.id)])
 
 
 
