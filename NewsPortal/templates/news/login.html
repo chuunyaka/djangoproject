@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+{% block content %}
+<h2> Войти в систему </h2>
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<table>
+<tr>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<!--<a href="{% url 'login' %}">Войти</a>-->
+<a href="{% url 'account_login' %}?next=/">Войти</a>
+
+<a href="{% provider_login_url 'yandex' %}">Войти через Yandex</a>
+
+</form>
+<button> <a href="/news/signup"> Регистрация </a></button>
+{% endblock %}

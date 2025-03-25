@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator
 from django.urls import reverse
 from django.utils.timezone import now
 
+
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete= models.CASCADE)
     rating = models.IntegerField(default=0)
@@ -82,6 +83,7 @@ class Comment(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
+
 
 
 
