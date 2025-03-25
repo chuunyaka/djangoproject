@@ -21,7 +21,6 @@ urlpatterns = [
    path('admin/', admin.site.urls),
    path('pages/', include('django.contrib.flatpages.urls')),
    path('news/', include('news.urls')),
-   # path('accounts/', include('django.contrib.auth.urls')),  # Включаем стандартные пути аутентификации
    path('accounts/', include('allauth.urls')),
    path('', include('protect.urls')),
 ]

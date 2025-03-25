@@ -1,7 +1,4 @@
 from django.urls import path
-
-from .forms import CommonSignupForm
-# Импортируем созданное нами представление
 from .views import NewsSearch, NewsList, NewDetail, NewCreate, NewUpdate, NewDelete, ArticleCreate, ArticleDelete, ArticleUpdate
 from .views import upgrade_me
 from django.contrib.auth.views import LoginView, LogoutView

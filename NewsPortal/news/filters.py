@@ -1,8 +1,6 @@
-from django.contrib.sites import models
 from django_filters import CharFilter, FilterSet, DateFilter
-from django.db import models
 from django import forms
-from .models import Post, Author
+from .models import Post
 
 class PostFilter(FilterSet):
     title = CharFilter(field_name='title', lookup_expr='icontains', label="Название")

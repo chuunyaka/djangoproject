@@ -4,5 +4,4 @@ from .views import IndexView
 
 urlpatterns = [
     path('', IndexView.as_view()),
-    # path('upgrade/', upgrade_me, name='upgrade'),
 ]
