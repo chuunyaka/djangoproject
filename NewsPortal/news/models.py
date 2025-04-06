@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.urls import reverse
 from django.utils.timezone import now
-
+from django.core.mail import send_mail
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete= models.CASCADE)
@@ -22,7 +22,7 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique = True)
-
+    subscribers = models.ManyToManyField(User, related_name='subscribed_categories', blank=True)
     def __str__(self):
         return self.name
 
@@ -34,6 +34,10 @@ class Post(models.Model):
         (ARTICLE, 'Статья'),
         (NEWS, 'Новость')
     )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        send_new_post_email(self)
 
     author = models.ForeignKey(Author, on_delete = models.CASCADE)
     post_type = models.CharField(max_length=2, choices= TYPES, default=ARTICLE)
@@ -84,6 +88,20 @@ class Comment(models.Model):
         self.rating -= 1
         self.save()
 
+def send_new_post_email(post):
+    subscribers = post.category.subscribers.all()
+    subject = post.title
+    message = f"Здравствуй, {post.title[:50]}... Новая статья в твоём любимом разделе!"
+    html_message = f"<h1>{post.title}</h1><p>{post.content[:50]}...</p>"
+
+    for user in subscribers:
+        send_mail(
+            subject,
+            message,
+            'from@example.com',
+            [user.email],
+            html_message=html_message,
+        )
 
 
 

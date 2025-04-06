@@ -1,19 +1,20 @@
 import os
-from django.http import HttpResponseForbidden
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import Group
+from django.http import HttpResponseForbidden
+from django.shortcuts import redirect, get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-from .forms import PostForm
+from django.core.mail import send_mail
 from .filters import PostFilter
-from .models import Post
-from django.shortcuts import redirect
-from django.contrib.auth.models import Group
-from django.contrib.auth.decorators import login_required
-
+from .forms import PostForm
+from .models import Post, Category
 
 
 class NewsList(ListView):
@@ -157,3 +158,16 @@ class AddNew(PermissionRequiredMixin, View):
 
 class ChangeNew(PermissionRequiredMixin, View):
     permission_required = ('news.change_new',)
+
+def subscribe_to_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    if request.user.is_authenticated:
+        if category.subscribers.filter(id=request.user.id).exists():
+            messages.info(request, 'Вы уже подписаны на эту категорию.')
+        else:
+            category.subscribers.add(request.user)
+            messages.success(request, 'Вы успешно подписались на эту категорию!')
+    else:
+        messages.error(request, 'Вам нужно войти, чтобы подписаться.')
+    return redirect('news_list')
+

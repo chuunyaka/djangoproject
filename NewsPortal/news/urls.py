@@ -3,6 +3,7 @@ from .views import NewsSearch, NewsList, NewDetail, NewCreate, NewUpdate, NewDel
 from .views import upgrade_me
 from django.contrib.auth.views import LoginView, LogoutView
 from allauth.account.views import SignupView
+from .views import subscribe_to_category
 
 urlpatterns = [
     path('', NewsList.as_view(), name='news_list'),
@@ -26,4 +27,6 @@ urlpatterns = [
          SignupView.as_view(template_name='news/signup.html'),
          name='signup'),
     path('upgrade/', upgrade_me, name='upgrade'),
+    path('subscribe/<int:category_id>/', subscribe_to_category, name='subscribe_to_category'),
+    path('appointments/', NewDelete.as_view(), name='appointments'),
 ]
