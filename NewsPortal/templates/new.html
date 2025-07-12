@@ -1,0 +1,35 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+{{ new.title }}
+{% endblock title %}
+
+{% block content %}
+<p><strong>Author:</strong> {{ object.author }}</p>
+<p><strong>Post type:</strong> {{ new.post_type }}</p>
+<p><strong>Category:</strong></p>
+<ul>
+{% for category in categories %}
+    <li>
+        {{ category.name }}
+        {% if user.is_authenticated %}
+            {% if category_subscriptions|get:category.id %}
+                <span>Вы уже подписаны</span>
+            {% else %}
+                <form action="{% url 'subscribe_to_category' category.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Подписаться</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'account_login' %}">Войдите, чтобы подписаться</a>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+<p><strong>Text:</strong> {{ new.text|censor }}</p>
+<p><strong>Rating:</strong> {{ new.rating }}</p>
+<p><strong>Created at:</strong> {{ new.created_at|date:"d.m.Y" }}</p>
+{% endblock content %}
+

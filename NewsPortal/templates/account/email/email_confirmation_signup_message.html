@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Verify Your Email</title>
+</head>
+<body style="font-family: Arial, sans-serif; background: #f6f6f6; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px;">
+        <h2>Hello {{ user.username|default:user.email }}!</h2>
+        <p>Thank you for registering. Please confirm your email address by clicking the button below:</p>
+        <p style="text-align: center;">
+            <a href="{{ activate_url }}" style="
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                display: inline-block;
+            ">Confirm Email</a>
+        </p>
+        <p>If the button doesn’t work, copy and paste this link into your browser:</p>
+        <p><a href="{{ activate_url }}">{{ activate_url }}</a></p>
+        <p>Thanks,<br>The Team</p>
+    </div>
+</body>
+</html>

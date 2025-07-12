@@ -1,0 +1,101 @@
+{% extends 'flatpages/default.html' %}
+
+<!--{% load custom_tags %}-->
+
+{% load custom_filters %}
+<p>{{ post.text|censor }}</p>
+
+{% load custom_tags %}
+
+<!--{% block title %}-->
+<!--News-->
+<!--{% endblock title %}-->
+
+
+<!--   <h1>Все новости </h1>-->
+<!--<form method="get">-->
+<!--    {{ filterset.form.title.label_tag }} {{ filterset.form.title }}-->
+<!--    {{ filterset.form.author_username.label_tag }} {{ filterset.form.author_username }}-->
+<!--    {{ filterset.form.start_date.label_tag }} {{ filterset.form.start_date }}-->
+<!--    {{ filterset.form.end_date.label_tag }} {{ filterset.form.end_date }}-->
+<!--    <input type="submit" value="Фильтровать">-->
+<!--</form>-->
+
+
+<!--   <hr>-->
+<!--   {% if news %}-->
+<!--       <table>-->
+<!--           <tr>-->
+<!--               <td>Author</td>-->
+<!--               <td>Post_type</td>-->
+<!--               <td>Create </td>-->
+<!--               <td>Category</td>-->
+<!--               <td>Title</td>-->
+<!--               <td>Text</td>-->
+<!--               <td>Rating</td>-->
+<!--           </tr>-->
+
+<!--           {% for new in news %}-->
+<!--           <tr>-->
+<!--               <td>{{ new.author.user.name }}</td>-->
+<!--               <td>{{ new.post_type}}</td>-->
+<!--               <td>{{ new.created_at|date:"d.m.Y" }}</td>-->
+<!--               <td>-->
+<!--                   {% for category in new.category.all %}-->
+<!--                       {{ category.name }}{% if not forloop.last %}, {% endif %}-->
+<!--                   {% endfor %}-->
+<!--               </td>-->
+<!--               <td>{{ new.title }}</td>-->
+<!--               <td>{{ new.text|censor }}</td>-->
+<!--               <td>{{ new.rating }}</td>-->
+<!--           </tr>-->
+<!--           {% endfor %}-->
+
+<!--       </table>-->
+<!--   {% else %}-->
+<!--       <h2>Новостей нет!</h2>-->
+<!--   {% endif %}-->
+<!--   {% if page_obj.has_previous %}-->
+<!--       {# Для каждой ссылки пагинации указываем обработку через новый тег #}-->
+<!--       <a href="?{% url_replace page=1 %}">1</a>-->
+<!--       {% if page_obj.previous_page_number != 1 %}-->
+<!--           ...-->
+<!--           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>-->
+<!--       {% endif %}-->
+<!--   {% endif %}-->
+
+<!--   {{ page_obj.number }}-->
+
+<!--   {% if page_obj.has_next %}-->
+<!--       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>-->
+<!--       {% if paginator.num_pages != page_obj.next_page_number %}-->
+<!--           ...-->
+<!--           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>-->
+<!--       {% endif %}-->
+<!--   {% endif %}-->
+
+
+
+
+
+{% block content %}
+<h2>Поиск новостей</h2>
+
+<form method="get">
+    {{ filterset.form.as_p }}
+    <button type="submit">Фильтровать</button>
+</form>
+
+<h3>Результаты поиска</h3>
+<ul>
+    {% for new in news %}
+        <li>
+            <a href="{% url 'news_detail' new.id %}">{{ new.title }}</a> ({{ new.created_at|date:"d.m.Y" }})
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
+
+

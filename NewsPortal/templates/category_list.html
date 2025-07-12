@@ -1,0 +1,8 @@
+{% if is_not_subscriber %}
+    <form action="{% url 'subscribe' category.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Подписаться</button>
+    </form>
+{% else %}
+    <p>Вы уже подписаны на эту категорию</p>
+{% endif %}
