@@ -65,8 +65,10 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.title}: {self.text[:10]}'  # Используем title вместо name
 
+
     def get_absolute_url(self):
-        return reverse('new_detail', args=[str(self.id)])
+        return reverse('news:new_detail', kwargs={'pk': self.pk})
+        # return reverse('new_detail', args=[str(self.id)])
 
     def send_notification(self):
         for category in self.category.all():

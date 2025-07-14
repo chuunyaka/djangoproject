@@ -17,7 +17,8 @@
             {% if category_subscriptions|get:category.id %}
                 <span>Вы уже подписаны</span>
             {% else %}
-                <form action="{% url 'subscribe_to_category' category.id %}" method="post" style="display:inline;">
+                <form action="{% url 'news:subscribe_to_category' category_id=category.id %}
+" method="post" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit">Подписаться</button>
                 </form>

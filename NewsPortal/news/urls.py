@@ -1,9 +1,11 @@
+from allauth.headless.urls import app_name
 from django.urls import path
 from .views import NewsSearch, NewsList, NewDetail, NewCreate, NewUpdate, NewDelete, ArticleCreate, ArticleDelete, \
     ArticleUpdate, CategoryListView, subscribe_to_category
 from .views import upgrade_me
 from django.contrib.auth.views import LoginView, LogoutView
 from allauth.account.views import SignupView
+app_name= 'news'
 
 urlpatterns = [
     path('', NewsList.as_view(), name='news_list'),
