@@ -49,7 +49,7 @@ class Post(models.Model):
     rating = models.IntegerField(default=0)
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)  # Передаем аргументы корректно
+        super().__init__(*args, **kwargs)
 
     def like(self):
         self.rating += 1
@@ -63,12 +63,11 @@ class Post(models.Model):
         return f"{self.text[:124]}..."
 
     def __str__(self):
-        return f'{self.title}: {self.text[:10]}'  # Используем title вместо name
+        return f'{self.title}: {self.text[:10]}'
 
 
     def get_absolute_url(self):
         return reverse('news:new_detail', kwargs={'pk': self.pk})
-        # return reverse('new_detail', args=[str(self.id)])
 
     def send_notification(self):
         for category in self.category.all():

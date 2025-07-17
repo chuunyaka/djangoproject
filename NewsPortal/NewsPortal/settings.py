@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'protect',
     'allauth.socialaccount.providers.yandex',
-    'django_apscheduler'# Провайдер Yandex
+    'django_apscheduler'
 ]
 
 SITE_ID = 1
@@ -166,12 +166,11 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_FORMS = {'signup': 'news.forms.CommonSignupForm'}
 
-EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
-EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
-EMAIL_HOST_USER = 'viktoriakasenceva95'  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
-EMAIL_HOST_PASSWORD = 'hfkctvvubidphamx'  # пароль от почты
-EMAIL_USE_SSL = True  # Яндекс использует ssl, подробнее о том, что это, почитайте в дополнительных источниках, но включать его здесь обязательно
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'viktoriakasenceva95'
+EMAIL_HOST_PASSWORD = '***********'
+EMAIL_USE_SSL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = 'viktoriakasenceva95@yandex.ru'
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
@@ -179,7 +178,5 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = False
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
 
-
-# Настройки APScheduler
-APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"  # Формат даты
-APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Таймаут выполнения задачи в секундах
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
