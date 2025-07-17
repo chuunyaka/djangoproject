@@ -1,0 +1,10 @@
+<h2>Привет, {{ username }}!</h2>
+<p>Вот свежие новости в категории <strong>{{ category.name }}</strong> за прошедшую неделю:</p>
+<ul>
+    {% for post in posts %}
+        <li>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> — {{ post.preview }}
+        </li>
+    {% endfor %}
+</ul>
+<p>Хорошего чтения!</p>

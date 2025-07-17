@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'protect',
-    'allauth.socialaccount.providers.yandex',  # Провайдер Yandex
+    'allauth.socialaccount.providers.yandex',
+    'django_apscheduler'# Провайдер Yandex
 ]
 
 SITE_ID = 1
@@ -179,3 +180,6 @@ ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
 
 
+# Настройки APScheduler
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"  # Формат даты
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Таймаут выполнения задачи в секундах
