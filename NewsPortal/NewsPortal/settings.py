@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'protect',
     'allauth.socialaccount.providers.yandex',
-    'django_apscheduler'
+    'django_apscheduler'# Провайдер Yandex
 ]
 
 SITE_ID = 1
@@ -166,11 +166,12 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_FORMS = {'signup': 'news.forms.CommonSignupForm'}
 
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'viktoriakasenceva95'
-EMAIL_HOST_PASSWORD = '***********'
-EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
+EMAIL_HOST_USER = 'viktoriakasenceva95'  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
+EMAIL_HOST_PASSWORD = 'hfkctvvubidphamx'  # пароль от почты
+EMAIL_USE_SSL = True  # Яндекс использует ssl, подробнее о том, что это, почитайте в дополнительных источниках, но включать его здесь обязательно
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = 'viktoriakasenceva95@yandex.ru'
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
@@ -178,5 +179,15 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = False
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
 
-APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
-APSCHEDULER_RUN_NOW_TIMEOUT = 25
+
+# Настройки APScheduler
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"  # Формат даты
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Таймаут выполнения задачи в секундах
+
+CELERY_BROKER_URL = 'redis://:Q2ziXsFVt5lmMXQX3IOMJlVQvz3Q2iqa@redis-19194.c91.us-east-1-3.ec2.redns.redis-cloud.com:19194/0'
+CELERY_RESULT_BACKEND = 'redis://:Q2ziXsFVt5lmMXQX3IOMJlVQvz3Q2iqa@redis-19194.c91.us-east-1-3.ec2.redns.redis-cloud.com:19194/0'
+
+
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
