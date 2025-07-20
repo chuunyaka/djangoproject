@@ -29,7 +29,7 @@ def send_weekly_news():
                 msg = EmailMultiAlternatives(
                     subject=f'Еженедельная подборка новостей по категории {category.name}',
                     body='',
-                    from_email='noreply@newsportal.com',
+                    from_email='viktoriakasenceva95@yandex.ru',
                     to=[user.email],
                 )
                 msg.attach_alternative(html_content, "text/html")
