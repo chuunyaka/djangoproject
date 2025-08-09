@@ -6,6 +6,7 @@
 {% endblock title %}
 
 {% block content %}
+<h1><strong>{{ new.title }}</strong></h1>
 <p><strong>Author:</strong> {{ object.author }}</p>
 <p><strong>Post type:</strong> {{ new.post_type }}</p>
 <p><strong>Category:</strong></p>
@@ -33,4 +34,5 @@
 <p><strong>Rating:</strong> {{ new.rating }}</p>
 <p><strong>Created at:</strong> {{ new.created_at|date:"d.m.Y" }}</p>
 {% endblock content %}
+
 

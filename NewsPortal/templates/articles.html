@@ -7,7 +7,9 @@
     Articles
 {% endblock title %}
 
+{% load cache %}
 {% block content %}
+    {% cache 30 nav %}
     <h1>Все статьи</h1>
 
     <hr>
@@ -38,6 +40,7 @@
                     <td>{{ article.rating }}</td>
                 </tr>
             {% endfor %}
+        {% endcache %}
         </table>
     {% else %}
         <h2>Статей нет!</h2>

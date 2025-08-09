@@ -9,7 +9,9 @@
 News
 {% endblock title %}
 
+{% load cache %}
 {% block content %}
+    {% cache 30 news %}
    <h1>Все новости </h1>
 <!--   <form action="" method="get">-->
 <!--       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}-->
@@ -45,11 +47,11 @@ News
                <td>{{ new.rating }}</td>
            </tr>
            {% endfor %}
-
        </table>
    {% else %}
        <h2>Новостей нет!</h2>
    {% endif %}
+    {% endcache %}
    {% if page_obj.has_previous %}
        {# Для каждой ссылки пагинации указываем обработку через новый тег #}
        <a href="?{% url_replace page=1 %}">1</a>

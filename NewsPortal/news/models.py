@@ -7,7 +7,7 @@ from django.utils.timezone import now
 import django_filters
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
-
+from django.core.cache import cache
 
 
 class Author(models.Model):
@@ -92,6 +92,10 @@ class Post(models.Model):
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
 
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'product-{self.pk}')  # затем удаляем его из кэша, чтобы сбросить его
 
 
 class PostCategory(models.Model):

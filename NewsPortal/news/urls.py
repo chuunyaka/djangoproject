@@ -5,9 +5,12 @@ from .views import NewsSearch, NewsList, NewDetail, NewCreate, NewUpdate, NewDel
 from .views import upgrade_me
 from django.contrib.auth.views import LoginView, LogoutView
 from allauth.account.views import SignupView
+from django.views.decorators.cache import cache_page
 app_name= 'news'
 
 urlpatterns = [
+    # path('', cache_page(60)(NewsList.as_view()), name='news_list'),
+    # path('<int:pk>/', cache_page(300)(NewDetail.as_view()), name='new_detail'),
     path('', NewsList.as_view(), name='news_list'),
     path('<int:pk>/', NewDetail.as_view(), name='new_detail'),
     path('create/', NewCreate.as_view(), name='new_create'),
